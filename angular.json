@@ -107,5 +107,8 @@
       }
     }
   },
-  "defaultProject": "ricknmortyAPP"
+  "defaultProject": "ricknmortyAPP",
+  "cli": {
+    "analytics": false
+  }
 }
