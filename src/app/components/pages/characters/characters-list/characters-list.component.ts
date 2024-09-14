@@ -8,7 +8,7 @@ import {
 import { filter, take } from 'rxjs/operators';
 import { CharacterService } from '@shared/services/character.service';
 import { Character } from '@app/shared/components/interface/character.interface';
-import { DOCUMENT } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 
 type RequestInfo = {
   next: string;
@@ -26,18 +26,12 @@ export class CharactersListComponent implements OnInit {
     next: '',
   };
 
-  showGoUpButton = false;
-
   private pageNum = 1;
+  private favorites: number[] = [];
 
   private query: string | undefined;
 
-  private hideScrollHeight = 200;
-
-  private showScrollHeight = 500;
-
   constructor(
-    @Inject(DOCUMENT) private document:Document,
     private characterSvc: CharacterService,
     private route: ActivatedRoute,
     private router: Router,
@@ -47,28 +41,29 @@ export class CharactersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCharactersByQuery();
+    this.loadFavoritesFromStorage()
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll():void {
-    const yOffSet = window.pageYOffset;
-    if ((yOffSet || this.document.documentElement.scrollTop || this.document.body.scrollTop) > this.showScrollHeight) {
-      this.showGoUpButton = true;
-    } else if (this.showGoUpButton && (yOffSet || this.document.documentElement.scrollTop || this.document.body.scrollTop) < this.hideScrollHeight) {
-      this.showGoUpButton = false;
+  private loadFavoritesFromStorage(): number[] {
+    const savedFavorites = localStorage.getItem('favorites');
+    if (savedFavorites) {
+      this.favorites = JSON.parse(savedFavorites);
     }
+    return this.favorites;
   }
 
-  onScrollDown():void{
-    if (this.info.next) {
-      this.pageNum++;
-      this.getDataFromService();
-    }
+  isFavorite(id: number): boolean {
+    return this.favorites.includes(id);
   }
 
-  onScrollTop():void{
-    this.document.body.scrollTop = 0;
-    this.document.documentElement.scrollTop = 0;
+  addFavorite(id: number){
+    this.characterSvc.addFavorite(id)
+    this.loadFavoritesFromStorage()
+  }
+
+  removeFavorite(id: number){
+    this.characterSvc.removeFavorite(id)
+    this.loadFavoritesFromStorage()
   }
 
   private onUrlChanged(): void {

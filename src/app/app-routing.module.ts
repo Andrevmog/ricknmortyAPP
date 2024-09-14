@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path:'',
-    redirectTo: 'home',
+    redirectTo: 'character-list',
     pathMatch:'full',
   },
   {
@@ -20,11 +20,11 @@ const routes: Routes = [
       ).then((m) => m.CharactersListModule),
   },
   {
-    path: 'character-details',
+    path: 'favorites',
     loadChildren: () =>
       import(
-        './components/pages/characters/characters-details/characters-details.module'
-      ).then((m) => m.CharactersDetailsModule),
+        './components/pages/characters/favorites/favorites.module'
+      ).then((m) => m.FavoritesModule),
   },
 ];
 

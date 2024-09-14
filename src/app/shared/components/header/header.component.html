@@ -1,18 +1,27 @@
 <div class="header">
   <div class="logo">
-    <img src="\assets\logo.png" alt="">
+    <img src="\assets\logo.png" alt="" />
   </div>
   <div class="options">
-    <button type="button" href="#" class="header options-home">
-      <span class="material-icons">home</span>
-      <a href="#" class="options-label">Ínicio</a>
-    </button>
-    <button type="button" href="#" class="header options-favorites">
-      <span class="material-icons">
-        favorite
-      </span>
-      <a href="#" class="options-label">Favoritos</a>
-      <div class="options-number">3</div>
-    </button>
+    <a href="/"
+        href="#"
+        class="header options-home"
+        [ngClass]="this.router.url !== '/favorites'  ? 'active' : 'disabled'"
+      >
+        <span class="material-icons">home</span>
+        <span class="options-label">Ínicio</span>
+    </a>
+
+    <a
+        class="header options-favorites"
+        href="favorites"
+        [ngClass]="this.router.url === '/favorites' ? 'active' : 'disabled'"
+      >
+        <span class="material-icons">
+          favorite
+        </span>
+        <span class="options-label">Favoritos</span>
+        <div class="options-number">0</div>
+    </a>
   </div>
 </div>

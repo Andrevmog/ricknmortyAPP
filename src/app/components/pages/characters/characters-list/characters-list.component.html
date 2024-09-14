@@ -6,14 +6,23 @@
   <div class="container">
     <div class="content" *ngFor="let character of characters">
       <div class="card">
+        <div *ngIf="!isFavorite(character.id)" class="favorite" (click)="addFavorite(character.id)">
+          <span class="material-symbols-outlined">
+            favorite
+          </span>
+        </div>
+        <div *ngIf="isFavorite(character.id)" class="favorite already" (click)="removeFavorite(character.id)">
+          <span class="material-symbols-outlined">
+            favorite
+          </span>
+        </div>
         <div class="image">
-          <img [src]="character.image" [alt]="character.name" [class]="">
+          <img [src]="character.image" [alt]="character.name" [class]="" />
         </div>
         <div class="info">
-          <div class="name">{{character.name}}</div>
-          <div class="specie">{{character.species}}</div>
+          <div class="name">{{ character.name }}</div>
+          <div class="specie">{{ character.species }}</div>
         </div>
-
       </div>
     </div>
   </div>
@@ -22,4 +31,3 @@
     <h3>Tente realizar uma nova busca</h3>
   </div>
 </div>
-

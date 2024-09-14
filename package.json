@@ -28,6 +28,7 @@
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "material-icons": "^1.13.12",
+    "ngx-context": "^2.0.0",
     "ngx-infinite-scroll": "^17.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

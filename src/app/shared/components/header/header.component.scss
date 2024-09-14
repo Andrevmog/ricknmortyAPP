@@ -33,22 +33,21 @@
       align-items: center;
       justify-content: center;
       width: 40%;
-      background-color: white;
       outline: none;
       border: none;
       padding: 11px 0;
       gap: 8px;
+      background-color: none;
       height: 100%;
       transition: transform 750ms;
       cursor: pointer;
+      color: white;
 
-      &:hover{
-        opacity: .5;
-      }
-
-      a{
+      &.active{
+        background-color: white;
         color: black;
       }
+
     }
 
     &-favorites {
@@ -61,12 +60,19 @@
       outline: none;
       border: none;
 
-      padding: 8px 0;
+      padding: 10px 0;
       gap: 8px;
       transition: transform 750ms;
 
-      &:hover{
-        opacity: .5;
+      &.active{
+        background-color: white;
+        color: black;
+      }
+
+      &.disabled{
+        background-color: none;
+        color: white;
+
       }
 
       a{
