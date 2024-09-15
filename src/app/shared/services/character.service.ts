@@ -45,6 +45,7 @@ export class CharacterService {
 
   private saveFavoritesToStorage(): void {
     localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    localStorage.setItem('favoritesCount', JSON.stringify(this.favoritesCount));
   }
 
   private loadFavoritesFromStorage(): number[] {
