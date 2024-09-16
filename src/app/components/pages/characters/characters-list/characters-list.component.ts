@@ -8,7 +8,7 @@ import {
 import { filter, take } from 'rxjs/operators';
 import { CharacterService } from '@shared/services/character.service';
 import { Character } from '@app/shared/components/interface/character.interface';
-import { BehaviorSubject } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 type RequestInfo = {
   next: string;
@@ -32,6 +32,7 @@ export class CharactersListComponent implements OnInit {
   private query: string | undefined;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private characterSvc: CharacterService,
     private route: ActivatedRoute,
     private router: Router,
@@ -44,6 +45,16 @@ export class CharactersListComponent implements OnInit {
     this.loadFavoritesFromStorage()
   }
 
+  @HostListener('window:scroll', [])
+  // onWindowScroll():void{
+  //   const yOffSet = window.pageYOffset;
+  //   if ((yOffSet || this.document.documentElement.scrollTop || this.document.body.scrollTop) > this.showScrollHeight) {
+  //     this.showGoUpButton = true;
+  //   } else if (this.showGoUpButton && (yOffSet || this.document.documentElement.scrollTop || this.document.body.scrollTop) < this.hideScrollHeight){
+  //     this.showGoUpButton = false;
+  //   }
+  // }
+
   private loadFavoritesFromStorage(): number[] {
     const savedFavorites = localStorage.getItem('favorites');
     if (savedFavorites) {
@@ -51,6 +62,18 @@ export class CharactersListComponent implements OnInit {
     }
     return this.favorites;
   }
+
+  onScrollDown(): void{
+    if (this.info.next){
+      this.pageNum++;
+      this.getDataFromService();
+    }
+  }
+  onScrollTop(): void{
+    this.document.body.scrollTop = 0;
+    this.document.documentElement.scrollTop = 0;
+  }
+
 
   isFavorite(id: number): boolean {
     return this.favorites.includes(id);
